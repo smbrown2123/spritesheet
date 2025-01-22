@@ -23,10 +23,10 @@ class Spritesheet():
         return image
 
     # retruns a series of frames as a list
-    def get_frames(self, frameHeight, framesLength, width, height, flipX = 0, flipY = 0):
+    def get_frames(self, frameRow, framesLength, width, height, flipX = 0, flipY = 0):
         frames = []
         for i in range(framesLength):
-            frame = self.get_frame(i, frameHeight, width, height, flipX, flipY)
+            frame = self.get_frame(i, frameRow, width, height, flipX, flipY)
             frames.append(frame)
         return frames
 
