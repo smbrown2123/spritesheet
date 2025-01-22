@@ -1,0 +1,40 @@
+import pygame 
+import consts
+
+class Spritesheet():
+    def __init__(self, image, colour):
+        self.sheet = image
+        self.colour = colour
+        self.scale = consts.SPRITE_SCALE
+        self.frameCounter = 0
+        self.animationCounter = 0
+        self.startUpCounter = 0
+
+    def get_frame(self, frame_x, frame_y, width, height, flip_x, flip_y):
+        image = pygame.Surface((width,height)).convert_alpha()
+        image.blit(self.sheet, consts.ORIGIN, ((frame_x * width), (frame_y * height), width, height))
+        image = pygame.transform.scale(image, (width * self.scale, height * self.scale))
+        if flip_x or flip_y:
+            image = pygame.transform.flip(image, flip_x, flip_y)
+        image.set_colorkey(self.colour)
+    
+        return image
+
+    def get_frames(self, frameHeight, framesLength, width, height, flipX = 0, flipY = 0):
+        frames = []
+        for i in range(framesLength):
+            frame = self.get_frame(i, frameHeight, width, height, flipX, flipY)
+            frames.append(frame)
+        return frames
+
+    def play_animation(self, screen, pos, frames, animationTimer, startUpPause = 0):
+        screen.blit(frames[self.frameCounter], pos)
+        self.startUpCounter  += 1
+        if self.startUpCounter >= startUpPause:
+            self.animationCounter += 1
+            if self.animationCounter >= animationTimer:
+                self.frameCounter += 1
+                self.animationCounter = 0
+            if self.frameCounter >= len(frames):
+                self.frameCounter  = 0
+                self.startUpCounter = 0
