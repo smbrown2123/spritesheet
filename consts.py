@@ -1,0 +1,2 @@
+ORIGIN = (0,0)
+SPRITE_SCALE = 1
